@@ -30,9 +30,6 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//http.FileServer(http.Dir("/home/bwallad/go_work/WebSocketTrump/gorilla/css/style.css"))
-	//http.FileServer(http.Dir("/home/bwallad/go_work/WebSocketTrump/gorialla/img/trump.jpg"))
-	//http.FileServer(http.Dir("/home/bwallad/go_work/WebSocketTrump/gorilla"))
 	http.ServeFile(w, r, "home.html")
 }
 
