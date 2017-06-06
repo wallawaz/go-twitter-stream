@@ -1,79 +1,97 @@
-body {
-  padding: 0;
-  margin:0;
-  font-family: 'Amatic SC', cursive;
-  background:#ffc600;
-  background: url('../img/trump.jpg') no-repeat center center fixed;
-  background-color: #ffc600;
+table {
+  table-layout: fixed;
 }
-
-h1 {
+h1{
+  margin: 1;
+  font-size: 80px;
+  color: #820101;
+  font-weight: 100;
   text-align: center;
-  font-size: 6rem;
-  line-height:1;
-  position: fixed;
-  top:0; 
-  left:0;
-  width: 100%;
 }
-#mainHeader {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 #main {
   /*background: url('./img/trump.jpg') no-repeat center center fixed;*/
-  position: relative;
+  width: 40%;
+  float: right;
 }
+#mainTable{
+  cellpadding: 0;
+  cellspacing: 0;
+  width: 100%;
+  overflow-x:auto;
+}
+th.ID {
+  width: 0%
+}
+th.CreatedAt {
+  width: 0%;
+}
+th.Img {
+  width: 10%;
+}
+th.User {
+  width: 20%;
+}
+th.Text {
+  width: 70%;
+}
+
+/*
+.tbl-header{
+  background-color: rgba(255,255,255,0.3);
+ }
+ */
+.tbl-content{
+  /*height:500px;*/
+  /*margin-top: 0px;*/
+  /*border: 1px solid rgba(255,255,255,0.3);*/
+}
+td{
+  padding: 0;
+  text-align: left;
+  vertical-align:middle;
+  font-weight: 300;
+  font-size: 12px;
+  color: #b1c4e2;
+  border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+/* demo styles 
+
+section{
+  margin: 5px;
+}
+*/
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+} 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}
+
+body {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Libre Baskerville', serif;
+  background: url('../img/trump.jpg') no-repeat center center fixed;
+  background-size: 100%;
+}
+
 .poopDiv {
   position: absolute;
 }
-/*
-.score {
-  background:rgba(255,255,255,0.2);
-  padding:0 3rem;
-  line-height:1;
-  border-radius:1rem;
-}
 
-.game {
-  width:600px;
-  height:400px;
-  display:flex;
-  flex-wrap:wrap;
-  margin:0 auto;
-}
 
-.hole {
-  flex: 1 0 33.33%;
-  overflow: hidden;
-  position: relative;
+.dataTables_wrapper .dataTables_length {
+  float: right;
 }
-
-.hole:after {
-  display: block;
-  background: url(dirt.svg) bottom center no-repeat;
-  background-size:contain;
-  content:'';
-  width: 100%;
-  height:70px;
-  position: absolute;
-  z-index: 2;
-  bottom:-30px;
+.dataTables_wrapper .dataTables_filter {
+  float: right;
+  text-align: left;
 }
-
-.mole {
-  background:url('mole.svg') bottom center no-repeat;
-  background-size:60%;
-  position: absolute;
-  top: 100%;
-  width: 100%;
-  height: 100%;
-  transition:all 0.4s;
-}
-
-.hole.up .mole {
-  top:0;
-}
-*/

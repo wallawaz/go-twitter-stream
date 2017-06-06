@@ -94,12 +94,14 @@ func (c *Client) writePump() {
 				return
 			}
 
-			w, err := c.conn.NextWriter(websocket.TextMessage)
-			if err != nil {
-				return
-			}
-			send := []byte(tweet.Text)
-			w.Write(send)
+			//w, err := c.conn.NextWriter(websocket.TextMessage)
+			//if err != nil {
+			//	return
+			//}
+			//send := []byte(tweet.IDStr)
+			//log.Println("tweetID", send)
+			//w.Write(send)
+			c.conn.WriteJSON(tweet)
 
 			// Add queued chat messages to the current websocket message.
 			//n := len(c.send)
@@ -108,9 +110,9 @@ func (c *Client) writePump() {
 			//	w.Write(<-c.send)
 			//}
 
-			if err := w.Close(); err != nil {
-				return
-			}
+			//if err := w.Close(); err != nil {
+			//	return
+			//}
 		case <-ticker.C:
 			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
 			if err := c.conn.WriteMessage(websocket.PingMessage, []byte{}); err != nil {

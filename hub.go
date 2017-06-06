@@ -62,9 +62,9 @@ func (h *Hub) handle() {
 		rand := r1.Intn(10)
 		if rand <= 5 {
 			h.hubTweets <- tweet
-		}
+			time.Sleep(time.Duration(1) * time.Second)
 
-		//parse out tweet
+		}
 		time.Sleep(time.Duration(1) * time.Second)
 	}
 	go demux.HandleChan(stream.Messages)

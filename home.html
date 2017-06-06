@@ -3,96 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>TrumpDooDoo</title>
-  <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
-
+<h1>POTUS</h1>
 <div id="main">
-  <div id="mainHeader">
-    <h1>POTUS
-      <br />
-      <span class="score"></span>
-    </h1> 
-  </div>
+      <!--for demo wrap-->
+      <table id="mainTable">
+          <thead>
+          <th class="ID"></th>
+          <th class="CreatedAt"></th>
+          <th class="Img"></th>
+          <th class="User"></th>
+          <th class="Text"></th>
+        </thead>
+          <tbody>
+          </tbody>
+        </div>
+    </table>
   <!--<button onClick="addPoo()">💩</button>-->
 </div>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.15/datatables.min.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
 <script type="text/javascript">
 
+  const NUMROWS = 10;
   let conn;
-  let POOCOUNTER = 0;
+  let TWEETCOUNTER = 0;
   const main = document.querySelector("#main");
   const imageURLs = [
         "https://media.giphy.com/media/GrrjFZpBkKVhe/giphy.gif",
         "https://media.giphy.com/media/12zaaelwao65KU/giphy.gif"
         //"https://images-na.ssl-images-amazon.com/images/I/31eN8Ro0TML.jpg"
   ];
-
-  function getWindowPx() {
-    const x = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
-
-    const y = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
-
-    return {
-      "x": x,
-      "y": y
-    }
-  }
-
-  function pushTweet(tweetSpan) {
-    let poopDiv = document.createElement("div");
-    poopDiv.className = "poopDiv";
-
-    //get these randomly
-    //poopDiv.style.position = "absolute";
-
-    let pos = randomPosition();
-
-    poopDiv.style.top = pos.y;
-    poopDiv.style.left = pos.x;
-    main.appendChild(poopDiv);
-    console.dir(poopDiv);
-
-
-    let poopImage = document.createElement("img");
-    //poop.src = XXX();
-
-    poopImage.src = imageURLs[Math.round(Math.random(0,1))]
-    poopImage.alt = "poo-" + POOCOUNTER;
-
-    poopImage.style.width = '50px';
-    poopImage.style.height = '50px';
-    poopDiv.appendChild(poopImage);
-
-
-    poopDiv.appendChild(tweetSpan); 
-    POOCOUNTER += 1;
-    updatePooScore();
-  }
-
-  function randomPosition() {
-    //let x = main.style.width;
-    //let y = main.style.height;
-    const pos = getWindowPx();
-    console.dir(pos);
-
-    const x = Math.floor(Math.random() * pos.x) + 1;
-    const y = Math.floor(Math.random() * pos.y) + 1;
-    return {"x": `${x}px`, "y": `${y}px`}
-  }
-
-  function updatePooScore() {
-    let counter = document.querySelector('.score');
-    counter.innerHTML = String(POOCOUNTER);
-  }
-
-window.onload = function () {
-      //console.log('All assets are loaded');
-      //setBackGround();
+window.onload = function() {
+    const dt = $("#mainTable").DataTable({
+        "paging": false,
+        "scrollY": 300,
+        "bInfo" : false,
+        "columnDefs": [
+          {"visible": false, "targets": 0 },
+          {"visible": false, "targets": 1 }
+          ]
+    });
       if (window["WebSocket"]) {
           let conn = new WebSocket("ws://"+ document.location.host + "/ws");
           conn.onclose = function(evt) {
@@ -101,22 +56,16 @@ window.onload = function () {
               main.appendChild(item);
           };
           conn.onmessage = function(evt) {
-              //XXX change to parse JSON
-              let tweets = evt.data.split("\n");
-              for (var i=0; i<tweets.length; i++) {
-                  tweetSpan = document.createElement("span");
-                  tweetSpan.innerText = tweets[i];
-                  pushTweet(tweetSpan);
-              }
-          };
+              tweet = JSON.parse(evt.data);
+              updateTweets(tweet);
+         };
 
       } else {
           let item = document.createElement("div");
           item.innerHTML = "<b>Your browser does not support WebSockets</b>";
           main.appendChild(item);
       }
-      updatePooScore();
-};
+}
 
 </script>
 </body>
