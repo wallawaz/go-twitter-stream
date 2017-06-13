@@ -9,7 +9,18 @@
 <body>
 <h1>POTUS</h1>
 <div id="main">
-      <!--for demo wrap-->
+  <div class="split">
+      <div class="box">
+            <span id="counter">0</span>
+      </div>
+      <div>
+          <button id="firePoo">💩</button>
+          <br />
+          <br />
+          <img src="https://media.giphy.com/media/3oz8xrAQweeLfVIkzC/giphy.gif"></img>
+      </div>
+  </div>
+  <div class="split">
       <table id="mainTable">
           <thead>
           <th class="ID"></th>
@@ -18,12 +29,12 @@
           <th class="User"></th>
           <th class="Text"></th>
         </thead>
-          <tbody>
-          </tbody>
-        </div>
-    </table>
-  <!--<button onClick="addPoo()">💩</button>-->
+        <tbody>
+        </tbody>
+      </table>
+  </div>
 </div>
+
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.15/datatables.min.js"></script>
 <script type="text/javascript" src="/js/scripts.js"></script>
@@ -38,6 +49,9 @@
         "https://media.giphy.com/media/12zaaelwao65KU/giphy.gif"
         //"https://images-na.ssl-images-amazon.com/images/I/31eN8Ro0TML.jpg"
   ];
+  const POOIMAGE = "https://media.giphy.com/media/3oz8xrAQweeLfVIkzC/giphy.gif";
+  const TRUMPIMAGE = "https://media.giphy.com/media/l0HlCqyxYycGHyIRq/giphy.gif";
+
 window.onload = function() {
     const dt = $("#mainTable").DataTable({
         "paging": false,
@@ -49,16 +63,27 @@ window.onload = function() {
           ]
     });
       if (window["WebSocket"]) {
-          let conn = new WebSocket("ws://"+ document.location.host + "/ws");
+          conn = new WebSocket("ws://"+ document.location.host + "/ws");
           conn.onclose = function(evt) {
               let item = document.createElement("div");
               item.innerHTML = "<b>Connection closed</b>";
               main.appendChild(item);
           };
           conn.onmessage = function(evt) {
-              tweet = JSON.parse(evt.data);
-              updateTweets(tweet);
-         };
+
+              //tweet or vote update?
+              recv = JSON.parse(evt.data);
+              console.log(recv);
+              if ("POO" in recv) {
+                  updateVotes(recv);
+              } else {
+                  updateTweets(recv);
+              }
+          };
+          $("#firePoo").click(function() {
+              console.log(1);
+              conn.send(1);
+          });
 
       } else {
           let item = document.createElement("div");

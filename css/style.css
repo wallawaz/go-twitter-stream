@@ -1,26 +1,67 @@
+button {
+  font-size: 40px;
+  background: transparent;
+  border: 0px;
+}
 table {
   table-layout: fixed;
 }
 h1{
-  margin: 1;
   font-size: 80px;
   color: #820101;
   font-weight: 100;
   text-align: center;
+  padding: 0px;
+  margin-bottom: 0px;
+}
+html {
+  height: 100vh;
 }
 #main {
-  /*background: url('./img/trump.jpg') no-repeat center center fixed;*/
-  width: 40%;
-  float: right;
+  display: flex;
+  height: 100vh;
+  border: 1px solid rgba(255,255,255,0.3);
 }
+.split {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+.split .box {
+  flex: 1;
+  text-align: center;
+  display: inline-block;
+  /*align-self: flex-end;*/
+  border: 1px solid rgba(255,255,255,0.3);
+  /*margin-top: 35vh;*/
+}
+.split .box img {
+  width: 35vh;
+  height: 32vh;
+}
+/*
+#votes {
+  flex: 2;
+  display: flex;
+}
+#tableContainer {
+  flex: 2;
+}
+.box {
+  /*width: 33%;
+  height: 33%;
+  */
+  flex: 1;
+  padding: 10px;
+}*/
 #mainTable{
   cellpadding: 0;
   cellspacing: 0;
-  width: 100%;
-  overflow-x:auto;
+  /*width: 25%;*/
+  /*overflow-x:auto;*/
 }
 th.ID {
-  width: 0%
+  width: 0%;
 }
 th.CreatedAt {
   width: 0%;
@@ -54,14 +95,6 @@ td{
   color: #b1c4e2;
   border-bottom: solid 1px rgba(255,255,255,0.1);
 }
-
-/* demo styles 
-
-section{
-  margin: 5px;
-}
-*/
-
 /* for custom scrollbar for webkit browser*/
 
 ::-webkit-scrollbar {
@@ -81,12 +114,9 @@ body {
   font-family: 'Libre Baskerville', serif;
   background: url('../img/trump.jpg') no-repeat center center fixed;
   background-size: 100%;
+  margin: 0px;
+  padding: 0px;
 }
-
-.poopDiv {
-  position: absolute;
-}
-
 
 .dataTables_wrapper .dataTables_length {
   float: right;

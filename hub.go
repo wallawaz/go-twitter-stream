@@ -25,20 +25,28 @@ type Hub struct {
 	// incoming tweets from demux
 	hubTweets chan *twitter.Tweet
 
-	// Convenience Demux demultiplexed stream messages
-	// demux *twitter.SwitchDemux
+	// incoming votes from clients
+	votes chan []byte
+
+	// currentVotes Tally
+	currentVotes map[string]int
 }
 
 func newHub(c *twitter.Client) *Hub {
+	startingVotes := map[string]int{
+		"POO": 0,
+	}
 	return &Hub{
 		twitterClient: c,
 		register:      make(chan *Client),
 		unregister:    make(chan *Client),
 		clients:       make(map[*Client]bool),
 		hubTweets:     make(chan *twitter.Tweet),
-		//demux:         demux,
+		votes:         make(chan []byte),
+		currentVotes:  startingVotes,
 	}
 }
+
 func (h *Hub) handle() {
 
 	// filter tweets
@@ -91,6 +99,18 @@ func (h *Hub) run() {
 				default:
 					close(client.recvTweets)
 					delete(h.clients, client)
+				}
+			}
+		case vote := <-h.votes:
+			voteStr := string(vote[:])
+			if voteStr == "1" {
+				h.currentVotes["POO"] += 1
+			}
+			for client := range h.clients {
+				select {
+				case client.recvVotes <- h.currentVotes:
+				default:
+					close(client.recvVotes)
 				}
 			}
 		}

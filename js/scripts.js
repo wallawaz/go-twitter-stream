@@ -29,6 +29,9 @@ function updateTweets(tweet) {
       dt.draw()
     }
 }
+function updateVotes(vote) {
+  console.log(vote);
+}
 
 function pushTweet(tweetID) {
   let poopDiv = document.createElement("div");

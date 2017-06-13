@@ -42,6 +42,8 @@ type Client struct {
 
 	recvTweets chan *twitter.Tweet
 
+	recvVotes chan map[string]int
+
 	//XXX not needed yet
 	// Buffered channel of outbound messages.
 	//send chan []byte
@@ -52,26 +54,26 @@ type Client struct {
 //// The application runs readPump in a per-connection goroutine. The application
 //// ensures that there is at most one reader on a connection by executing all
 //// reads from this goroutine.
-//func (c *Client) readPump() {
-//	defer func() {
-//		c.hub.unregister <- c
-//		c.conn.Close()
-//	}()
-//	c.conn.SetReadLimit(maxMessageSize)
-//	c.conn.SetReadDeadline(time.Now().Add(pongWait))
-//	c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
-//	for {
-//		_, message, err := c.conn.ReadMessage()
-//		if err != nil {
-//			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway) {
-//				log.Printf("error: %v", err)
-//			}
-//			break
-//		}
-//		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-//		c.hub.broadcast <- message
-//	}
-//}
+func (c *Client) readPump() {
+	defer func() {
+		c.hub.unregister <- c
+		c.conn.Close()
+	}()
+	//c.conn.SetReadLimit(maxMessageSize)
+	//c.conn.SetReadDeadline(time.Now().Add(pongWait))
+	//c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
+	for {
+		_, vote, err := c.conn.ReadMessage()
+		if err != nil {
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway) {
+				log.Printf("error: %v", err)
+			}
+			break
+		}
+		//message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+		c.hub.votes <- vote
+	}
+}
 
 // writePump pumps messages from the hub to the websocket connection.
 //
@@ -113,6 +115,14 @@ func (c *Client) writePump() {
 			//if err := w.Close(); err != nil {
 			//	return
 			//}
+		case vote, ok := <-c.recvVotes:
+			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
+			if !ok {
+				c.conn.WriteMessage(websocket.CloseMessage, []byte{})
+				return
+			}
+			c.conn.WriteJSON(vote)
+
 		case <-ticker.C:
 			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
 			if err := c.conn.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
@@ -131,9 +141,14 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	}
 	//client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}
 
-	client := &Client{hub: hub, conn: conn, recvTweets: make(chan *twitter.Tweet)}
+	client := &Client{
+		hub:        hub,
+		conn:       conn,
+		recvTweets: make(chan *twitter.Tweet),
+		recvVotes:  make(chan map[string]int),
+	}
 
 	client.hub.register <- client
 	go client.writePump()
-	//client.readPump()
+	client.readPump()
 }
