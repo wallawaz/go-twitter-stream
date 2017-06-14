@@ -5,52 +5,83 @@
   <title>TrumpDooDoo</title>
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/odometer-default.css" rel="stylesheet">
 </head>
 <body>
-<h1>POTUS</h1>
-<div id="main">
-  <div class="split">
-      <div class="box">
-            <span id="counter">0</span>
-      </div>
-      <div>
-          <button id="firePoo">💩</button>
+<!--<h1>POTUS</h1>-->
+<div class="main-container">
+  <div class="left-container">
+      <div class="half-container">
           <br />
           <br />
           <img src="https://media.giphy.com/media/3oz8xrAQweeLfVIkzC/giphy.gif"></img>
+          <br />
+          <span>Please click the Poo below</span>
+          <span>in agreement</span><br />
+          <span>that Donald Trump is a doo doo person.</span><br />
+          <br />
+          <button id="firePoo">💩</button>
+      </div>
+      <div class="half-container">
+        <br />
+        <br />
+        <br />
+         <div class="odometer" id="mainCounter">0</div>
       </div>
   </div>
-  <div class="split">
-      <table id="mainTable">
-          <thead>
-          <th class="ID"></th>
-          <th class="CreatedAt"></th>
-          <th class="Img"></th>
-          <th class="User"></th>
-          <th class="Text"></th>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+  <div class="right-container">
+      <div class="full-container">
+         <br />
+         <br />
+         <br />
+         <br />
+         <br />
+         <br />
+         <br />
+         <div class="search">
+             <input type="text" id="searchBox">
+             <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
+             <span>Search</span>
+         </div>
+
+         <table id="mainTable">
+              <thead>
+              <th class="ID"></th>
+              <th class="CreatedAt"></th>
+              <th class="Img"></th>
+              <th class="User"></th>
+              <th class="Text"></th>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+      </div>
   </div>
 </div>
 
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.15/datatables.min.js"></script>
+<script src="https://use.fontawesome.com/e6d63fb807.js"></script>
+<script type="text/javascript" src="/js/odometer.min.js"></script>
+<!--
+<script type="text/javascript">
+  console.log("HERE");
+  setTimeout(function() {
+
+    let counter = document.querySelector('#mainCounter');
+    counter.innerHTML = 1000;
+  }, 1000);
+</script>-->
+
 <script type="text/javascript" src="/js/scripts.js"></script>
 <script type="text/javascript">
 
-  const NUMROWS = 10;
-  let conn;
-  let TWEETCOUNTER = 0;
-  const main = document.querySelector("#main");
-  const imageURLs = [
-        "https://media.giphy.com/media/GrrjFZpBkKVhe/giphy.gif",
-        "https://media.giphy.com/media/12zaaelwao65KU/giphy.gif"
-        //"https://images-na.ssl-images-amazon.com/images/I/31eN8Ro0TML.jpg"
-  ];
-  const POOIMAGE = "https://media.giphy.com/media/3oz8xrAQweeLfVIkzC/giphy.gif";
-  const TRUMPIMAGE = "https://media.giphy.com/media/l0HlCqyxYycGHyIRq/giphy.gif";
+let conn;
+const NUMROWS = 10;
+let TWEETCOUNTER = 0;
+
+const main = document.querySelector(".main-container");
+const mainCounter = document.querySelector(".odometer");
 
 window.onload = function() {
     const dt = $("#mainTable").DataTable({
@@ -62,7 +93,11 @@ window.onload = function() {
           {"visible": false, "targets": 1 }
           ]
     });
-      if (window["WebSocket"]) {
+    $("#searchBox").on("keyup search input paste cut", function() {
+        dt.search(this.value).draw();
+    });
+
+    if (window["WebSocket"]) {
           conn = new WebSocket("ws://"+ document.location.host + "/ws");
           conn.onclose = function(evt) {
               let item = document.createElement("div");
@@ -81,7 +116,7 @@ window.onload = function() {
               }
           };
           $("#firePoo").click(function() {
-              console.log(1);
+              //console.log(1);
               conn.send(1);
           });
 

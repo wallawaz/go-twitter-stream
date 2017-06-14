@@ -29,8 +29,11 @@ function updateTweets(tweet) {
       dt.draw()
     }
 }
+
 function updateVotes(vote) {
-  console.log(vote);
+    setTimeout(function() {
+      mainCounter.innerHTML = vote["POO"];
+    }, 200);
 }
 
 function pushTweet(tweetID) {
