@@ -33,7 +33,7 @@ function updateTweets(tweet) {
 function updateVotes(vote) {
     setTimeout(function() {
       mainCounter.innerHTML = vote["POO"];
-    }, 200);
+    }, 1000);
 }
 
 function pushTweet(tweetID) {

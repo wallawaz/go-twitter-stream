@@ -68,7 +68,7 @@ func (h *Hub) handle() {
 		r1 := rand.New(s1)
 
 		rand := r1.Intn(10)
-		if rand <= 5 {
+		if rand < 5 {
 			h.hubTweets <- tweet
 			time.Sleep(time.Duration(1) * time.Second)
 
@@ -85,6 +85,8 @@ func (h *Hub) run() {
 		case client := <-h.register:
 			h.clients[client] = true
 			fmt.Println("Client Connected:", client)
+			client.recvVotes <- h.currentVotes
+
 		case client := <-h.unregister:
 			if _, ok := h.clients[client]; ok {
 				delete(h.clients, client)

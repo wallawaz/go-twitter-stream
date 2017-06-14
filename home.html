@@ -63,22 +63,11 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-2.2.4/dt-1.10.15/datatables.min.js"></script>
 <script src="https://use.fontawesome.com/e6d63fb807.js"></script>
 <script type="text/javascript" src="/js/odometer.min.js"></script>
-<!--
-<script type="text/javascript">
-  console.log("HERE");
-  setTimeout(function() {
-
-    let counter = document.querySelector('#mainCounter');
-    counter.innerHTML = 1000;
-  }, 1000);
-</script>-->
-
 <script type="text/javascript" src="/js/scripts.js"></script>
 <script type="text/javascript">
 
 let conn;
 const NUMROWS = 10;
-let TWEETCOUNTER = 0;
 
 const main = document.querySelector(".main-container");
 const mainCounter = document.querySelector(".odometer");
@@ -120,11 +109,11 @@ window.onload = function() {
               conn.send(1);
           });
 
-      } else {
+    } else {
           let item = document.createElement("div");
           item.innerHTML = "<b>Your browser does not support WebSockets</b>";
           main.appendChild(item);
-      }
+    }
 }
 
 </script>
