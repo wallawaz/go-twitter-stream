@@ -3,59 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>TrumpDooDoo</title>
-  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC:700" rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet">
-  <link href="/css/odometer-default.css" rel="stylesheet">
+  <link href="/css/odometer-theme-default.css" rel="stylesheet">
 </head>
 <body>
 <!--<h1>POTUS</h1>-->
 <div class="main-container">
-  <div class="left-container">
-      <div class="half-container">
-          <br />
-          <br />
-          <img src="https://media.giphy.com/media/3oz8xrAQweeLfVIkzC/giphy.gif"></img>
-          <br />
-          <span>Please click the Poo below</span>
-          <span>in agreement</span><br />
-          <span>that Donald Trump is a POS.</span><br />
-          <br />
-          <button id="firePoo">💩</button>
-      </div>
-      <div class="half-container">
-        <br />
-        <br />
-        <br />
-         <div class="odometer" id="mainCounter">0</div>
-      </div>
+  <div class="header-container">
+        <div class="half-container">
+          <div style="padding-left: .2em" id="click-message">
+            <span>Click the Poo</span>
+            <br />
+            <span>Cast your vote</span>
+            <br />
+            <span>is Donald Trump is a POS?</span>
+          </div>
+        </div>
+        <div class="half-container" style="display: flex; justify-content: flex-end;">
+          <div class="quarter-container" style="background: #40a0e5;">
+            <button id="firePoo">💩</button>
+            <br />
+            <div class="odometer" id="mainCounter">0</div>
+          </div>
+          <!--<div class="quarter-container" style="border: 0; padding-left: 8em">-->
+          <div class="quarter-container" style="border: 0;">
+            <img src="https://media.giphy.com/media/3oz8xrAQweeLfVIkzC/giphy.gif"></img>
+          </div>
+        </div>
   </div>
-  <div class="right-container">
-      <div class="full-container">
-         <br />
-         <br />
-         <br />
-         <br />
-         <br />
-         <br />
-         <br />
-         <div class="search">
-             <input type="text" id="searchBox">
-             <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-             <span>Search</span>
-         </div>
-
-         <table id="mainTable">
-              <thead>
-              <th class="ID"></th>
-              <th class="CreatedAt"></th>
-              <th class="Img"></th>
-              <th class="User"></th>
-              <th class="Text"></th>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-      </div>
+  <div class="body-container">
+     <div class="search">
+         <input type="text" id="searchBox">
+         <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
+         <span>Search</span>
+     </div>
+     <table id="mainTable">
+          <thead>
+          <th class="ID"></th>
+          <th class="CreatedAt"></th>
+          <th class="Img"></th>
+          <th class="User"></th>
+          <th class="Text"></th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
   </div>
 </div>
 

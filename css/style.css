@@ -10,7 +10,7 @@ body {
   position: relative;
   height: 100%;
   overflow: hidden;
-  font-family: 'Libre Baskerville', serif;
+  font-family: 'Playfair Display SC', serif;
   background: url('../img/trump.jpg') no-repeat center center fixed;
   background-size: 100%;
   margin: 0;
@@ -19,81 +19,59 @@ body {
   /*justify-content: center;*/
 }
 
-h1{
-  font-size: 80px;
-  color: #820101;
-  font-weight: 100;
-  text-align: center;
-  padding: 0px;
-  margin-bottom: 0px;
-}
-
 button {
-  font-size: 60px;
+  font-size: 50px;
   background: transparent;
   border: 0px;
 }
 table {
   table-layout: fixed;
 }
-
 .main-container {
   display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
-  max-height: 100%;
   /*border: 1px solid rgba(255,255,255,0.3);*/
 }
-.left-container {
-  flex: 0 1 50%;
+.header-container {
+  flex: 0 1 auto;
   display: flex;
-  height: 100%;
-  max-width: 50%;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  text-align: center;
-  font-family: 'Libre Baskerville', serif;
-  font-weight: bold;
-  font-size: 26px;
-  color: #3ba5e2;
+  font-size: 30px;
+  padding-top: .3em;
 }
-
 .half-container {
-  flex: 0 0 100%;
-  max-height: 50%;
-  min-height: 50%;
-  max-width: 100%;
-  padding: .5em;
-  /*border: 1px solid red;*/
-}
-.half-container img {
-  width: 25%;
-  height: 25%;
-}
-.right-container {
   flex: 0 1 50%;
-  min-height: 100%;
-  max-height: 50%;
-  align-items: flex-end;
-  font-family: 'Libre Baskerville', serif;
-  font-size: 18px;
-  font-weight: bold; 
-  color: #3ba5e2;
-
+  /*border: 1px solid red;*/
+  align-self: center;
+  text-align: center;
+  color: #91c7f2;
 }
-.full-container {
-  flex: 0 0 100%;
-  max-height: 100%;
-  min-height: 100%;
-  max-width: 100%;
-  padding: .5em;
-  /*border: 1px lid red;*/
-}
-
-
 .odometer {
-  font-size: 50px;
+  font-size: 35px;
 }
+.quarter-container {
+  flex: 0 1 30%;
+  border: 2px solid black;
+  border-radius: 25px;
+  border-spacing: 3px;
+
+}
+
+.quarter-container img {
+  width: 4em;
+  height: 4em;
+  float: right;
+  padding-right: .5em;
+}
+
+.body-container {
+  flex: 3 0 auto;
+  align-self: flex-start;
+  padding: 2em;
+}
+
 
 #mainTable{
   cellpadding: 0;
