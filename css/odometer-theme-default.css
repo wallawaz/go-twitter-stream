@@ -83,7 +83,8 @@
 .odometer.odometer-auto-theme, .odometer.odometer-theme-default {
   font-family: "Helvetica Neue", sans-serif;
   line-height: 1.1em;
-  color: #bc8942;
+  color: #5e3f22;
+  padding-top: .3em;
 }
 .odometer.odometer-auto-theme .odometer-value, .odometer.odometer-theme-default .odometer-value {
   text-align: center;
