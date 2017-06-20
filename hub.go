@@ -73,7 +73,7 @@ func (h *Hub) handle() {
 			time.Sleep(time.Duration(1) * time.Second)
 
 		}
-		time.Sleep(time.Duration(1) * time.Second)
+		time.Sleep(time.Duration(3) * time.Second)
 	}
 	go demux.HandleChan(stream.Messages)
 }
