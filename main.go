@@ -18,6 +18,7 @@ import (
 )
 
 var addr = flag.String("addr", ":8080", "http service address")
+var wsAddr = flag.String("wsAddr", ":8081", "websocket address")
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL)
@@ -66,14 +67,17 @@ func main() {
 	hub.handle()
 	go hub.run()
 
+	//http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+	//	serveWs(hub, w, r)
+	//})
+	//go http.ListenAndServe(*wsAddr, nil)
+	go runWebSocket(hub, *wsAddr)
+
 	http.HandleFunc("/", serveHome)
 
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("img"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("js"))))
-	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		serveWs(hub, w, r)
-	})
 	err := http.ListenAndServe(*addr, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
